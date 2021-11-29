@@ -13,6 +13,9 @@
 		DC67032227074190003E7F3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC67032027074190003E7F3D /* Main.storyboard */; };
 		DC67032427074193003E7F3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC67032327074193003E7F3D /* Assets.xcassets */; };
 		DC67032727074193003E7F3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC67032527074193003E7F3D /* LaunchScreen.storyboard */; };
+		DC67033227076C36003E7F3D /* CoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67033127076C36003E7F3D /* CoinManager.swift */; };
+		DC85021A270B397B005B0045 /* CoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC850219270B397B005B0045 /* CoinData.swift */; };
+		DC85021C270B3BCC005B0045 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC85021B270B3BCC005B0045 /* CoinModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		DC67032327074193003E7F3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC67032627074193003E7F3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC67032827074193003E7F3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC67033127076C36003E7F3D /* CoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinManager.swift; sourceTree = "<group>"; };
+		DC850219270B397B005B0045 /* CoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinData.swift; sourceTree = "<group>"; };
+		DC85021B270B3BCC005B0045 /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,42 @@
 		DC67031927074190003E7F3D /* ByteCoinNew */ = {
 			isa = PBXGroup;
 			children = (
+				DC670330270741BA003E7F3D /* Model */,
+				DC67032E270741A3003E7F3D /* View */,
+				DC67032F270741B0003E7F3D /* Controller */,
 				DC67031A27074190003E7F3D /* AppDelegate.swift */,
 				DC67031C27074190003E7F3D /* SceneDelegate.swift */,
-				DC67031E27074190003E7F3D /* ViewController.swift */,
-				DC67032027074190003E7F3D /* Main.storyboard */,
 				DC67032327074193003E7F3D /* Assets.xcassets */,
 				DC67032527074193003E7F3D /* LaunchScreen.storyboard */,
 				DC67032827074193003E7F3D /* Info.plist */,
 			);
 			path = ByteCoinNew;
+			sourceTree = "<group>";
+		};
+		DC67032E270741A3003E7F3D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DC67032027074190003E7F3D /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DC67032F270741B0003E7F3D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DC67031E27074190003E7F3D /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		DC670330270741BA003E7F3D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DC67033127076C36003E7F3D /* CoinManager.swift */,
+				DC850219270B397B005B0045 /* CoinData.swift */,
+				DC85021B270B3BCC005B0045 /* CoinModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +170,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC67033227076C36003E7F3D /* CoinManager.swift in Sources */,
 				DC67031F27074190003E7F3D /* ViewController.swift in Sources */,
+				DC85021A270B397B005B0045 /* CoinData.swift in Sources */,
 				DC67031B27074190003E7F3D /* AppDelegate.swift in Sources */,
+				DC85021C270B3BCC005B0045 /* CoinModel.swift in Sources */,
 				DC67031D27074190003E7F3D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +325,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H7H9P2C2C5;
 				INFOPLIST_FILE = ByteCoinNew/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -308,6 +345,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H7H9P2C2C5;
 				INFOPLIST_FILE = ByteCoinNew/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
