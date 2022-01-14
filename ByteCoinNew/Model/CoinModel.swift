@@ -2,18 +2,12 @@
 //  CoinModel.swift
 //  ByteCoinNew
 //
-//  Created by Egor Tushev on 04.10.2021.
+//  Created by Egor Tushev on 12.01.2022.
 //
 
-import Foundation
-
 struct CoinModel {
-    let currancy: String
+    let currency: String
     let price: Double
-    
-    var priceString: String {
-        return String(format: "%.2f", price)
-    }
 }
 
 

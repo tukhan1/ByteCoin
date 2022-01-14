@@ -5,58 +5,68 @@
 //  Created by Egor Tushev on 01.10.2021.
 //
 
-protocol CoinManagerDelegate {
-    func didUpdatePrice(from: CoinModel)
-    func didFailWithError(error: Error)
-}
-
-
 import Foundation
 import UIKit
 
-struct CoinManager {
+protocol CoinManagerDelegate: AnyObject {
+    func didUpdatePrice(from: CoinModel)
+    func didFailWithError(_ error: Error)
+}
+
+private struct CoinData: Decodable {
+    var assetIdQuote: String
+    var rate: Double
     
-    var delegate: CoinManagerDelegate?
+    enum CodingKeys: String, CodingKey {
+            case assetIdQuote = "asset_id_quote"
+            case rate
+        }
+}
+
+class CoinManager {
     
-    let currancyArrey = ["USD", "RUB", "EUR", "CNY", "CHF", "JPY", "KZT"]
+    weak var delegate: CoinManagerDelegate?
     
-    let baseURL = "https://rest.coinapi.io/v1/exchangerate/BTC"
-    let apiKey = "7EF6C5DA-C57D-44C1-BE2B-777B3B9C7332"
+    let currenciesArray: [Currency] = [
+        Currency(image: UIImage(systemName: "rublesign.square"), designation: "RUB", title: "Российский рубль"),
+        Currency(image: UIImage(systemName: "dollarsign.square"), designation: "USD", title: "Американский доллар"),
+        Currency(image: UIImage(systemName: "eurosign.square"), designation: "EUR", title: "Евро"),
+        Currency(image: UIImage(systemName: "sterlingsign.square"), designation: "GBP", title: "Британский фунт стерлинга"),
+        Currency(image: UIImage(systemName: "yensign.square"), designation: "JPY", title: "Японская иена")
+    ]
     
-    func getCoinPrice(for currancy: String){
+    let cryptoCurrencies: [String] = ["BTC", "ETH", "LTC", "DOGE", "BNB", "BCH"]
+    
+    private static let baseURL = "https://rest.coinapi.io/v1/exchangerate/"
+    private static let apiKey = "759E9A9B-E140-465D-B47B-90DF2EAA17FC" /*"D209ABE8-CFA8-44F7-9E19-42CC3E665B24" "7EF6C5DA-C57D-44C1-BE2B-777B3B9C7332"*/
+    
+    func getCoinPrice(for currency: String,to crypto: String? , completed: @escaping (Result<CoinModel, Error>) -> Void) {
+        let urlCoin = "\(CoinManager.baseURL + (crypto ?? "BTC"))/\(currency)?apikey=\(CoinManager.apiKey)"
         
-        
-        let urlCoin = "\(baseURL)/\(currancy)?apikey=\(apiKey)"
-        
-        guard let url = URL(string: urlCoin) else {return}
-        let urlSession = URLSession(configuration: .default)
-        let task = urlSession.dataTask(with: url){data, response, error in
-            if error != nil {
-                print(error!)
+        if let url = URL(string: urlCoin) {
+            print(url)
+            let urlSession = URLSession(configuration: .default)
+            let task = urlSession.dataTask(with: url) { data, response, error in
+                if error != nil {
+                    print(error!)
+                }
+                guard let safeData = data else {
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    let decodedData = try decoder.decode(CoinData.self, from: safeData)
+                    let currency = decodedData.assetIdQuote
+                    let price = decodedData.rate
+                    completed(.success(CoinModel(currency: currency, price: price)))
+                }
+                catch {
+                    completed(.failure(error))
+                }
             }
-            
-            guard let safeData = data else {return}
-            let dataModel = parseJSON(safeData)
-            delegate?.didUpdatePrice(from: dataModel!)
-            
-        }
-        task.resume()
-    }
-    
-    func parseJSON (_ coinData: Data) -> CoinModel? {
-        do {
-            let decoder = JSONDecoder()
-            
-            let decodedData = try decoder.decode(CoinData.self, from: coinData)
-            let currancy = decodedData.asset_id_quote
-            let price = decodedData.rate
-            return CoinModel(currancy: currancy, price: price)
-        }
-        catch {
-            delegate?.didFailWithError(error: error)
-            return nil
+            task.resume()
+        } else {
+            return
         }
     }
-    
-    
 }

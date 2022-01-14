@@ -7,28 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77E45B252791E8CE008906E0 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E45B242791E8CE008906E0 /* Currency.swift */; };
+		77E45B272791E94C008906E0 /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E45B262791E94C008906E0 /* CurrencyViewController.swift */; };
 		DC67031B27074190003E7F3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67031A27074190003E7F3D /* AppDelegate.swift */; };
 		DC67031D27074190003E7F3D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67031C27074190003E7F3D /* SceneDelegate.swift */; };
-		DC67031F27074190003E7F3D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67031E27074190003E7F3D /* ViewController.swift */; };
+		DC67031F27074190003E7F3D /* ExchangeRateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67031E27074190003E7F3D /* ExchangeRateViewController.swift */; };
 		DC67032227074190003E7F3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC67032027074190003E7F3D /* Main.storyboard */; };
 		DC67032427074193003E7F3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC67032327074193003E7F3D /* Assets.xcassets */; };
 		DC67032727074193003E7F3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC67032527074193003E7F3D /* LaunchScreen.storyboard */; };
 		DC67033227076C36003E7F3D /* CoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67033127076C36003E7F3D /* CoinManager.swift */; };
-		DC85021A270B397B005B0045 /* CoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC850219270B397B005B0045 /* CoinData.swift */; };
 		DC85021C270B3BCC005B0045 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC85021B270B3BCC005B0045 /* CoinModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77E45B242791E8CE008906E0 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		77E45B262791E94C008906E0 /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
 		DC67031727074190003E7F3D /* ByteCoinNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ByteCoinNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC67031A27074190003E7F3D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC67031C27074190003E7F3D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DC67031E27074190003E7F3D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DC67031E27074190003E7F3D /* ExchangeRateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateViewController.swift; sourceTree = "<group>"; };
 		DC67032127074190003E7F3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC67032327074193003E7F3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC67032627074193003E7F3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC67032827074193003E7F3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC67033127076C36003E7F3D /* CoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinManager.swift; sourceTree = "<group>"; };
-		DC850219270B397B005B0045 /* CoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinData.swift; sourceTree = "<group>"; };
 		DC85021B270B3BCC005B0045 /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,7 +87,8 @@
 		DC67032F270741B0003E7F3D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				DC67031E27074190003E7F3D /* ViewController.swift */,
+				DC67031E27074190003E7F3D /* ExchangeRateViewController.swift */,
+				77E45B262791E94C008906E0 /* CurrencyViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -94,8 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				DC67033127076C36003E7F3D /* CoinManager.swift */,
-				DC850219270B397B005B0045 /* CoinData.swift */,
 				DC85021B270B3BCC005B0045 /* CoinModel.swift */,
+				77E45B242791E8CE008906E0 /* Currency.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -170,9 +173,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77E45B252791E8CE008906E0 /* Currency.swift in Sources */,
 				DC67033227076C36003E7F3D /* CoinManager.swift in Sources */,
-				DC67031F27074190003E7F3D /* ViewController.swift in Sources */,
-				DC85021A270B397B005B0045 /* CoinData.swift in Sources */,
+				DC67031F27074190003E7F3D /* ExchangeRateViewController.swift in Sources */,
+				77E45B272791E94C008906E0 /* CurrencyViewController.swift in Sources */,
 				DC67031B27074190003E7F3D /* AppDelegate.swift in Sources */,
 				DC85021C270B3BCC005B0045 /* CoinModel.swift in Sources */,
 				DC67031D27074190003E7F3D /* SceneDelegate.swift in Sources */,
