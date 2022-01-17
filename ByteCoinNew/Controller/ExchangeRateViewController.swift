@@ -12,33 +12,33 @@ class ExchangeRateViewController: UIViewController {
     private let coinManager = CoinManager()
     var currency: String = ""
     private var timer = Timer()
-    private var cryptoCyrrency: String? = nil
+    private var cryptoCyrrency = "BTC"
     
     @IBOutlet private var bitcoinLabel: UILabel!
     @IBOutlet private var valueLabel: UILabel!
-    @IBOutlet var cryptoPicker: UIPickerView!
+    @IBOutlet private var cryptoPicker: UIPickerView!
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         self.valueLabel.text = currency
         
-        timer.invalidate()
         updateCurrentCoinPrice()
-
-        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(updateCurrentCoinPrice), userInfo: nil, repeats: true)
+        
+        setTimer(on: 60.0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        timer.invalidate()
+        super.viewWillDisappear(true)
+        stopTimer()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        coinManager.delegate = self
         cryptoPicker.delegate = self
     }
     
     @objc func updateCurrentCoinPrice() {
-        coinManager.getCoinPrice(for: currency, to: cryptoCyrrency) {[weak self] result in
+        coinManager.getCoinPrice(for: currency, to: cryptoCyrrency) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -49,6 +49,17 @@ class ExchangeRateViewController: UIViewController {
                 self.didFailWithError(error)
             }
         }
+    }
+    
+//MARK: - Timer actions
+    
+    func setTimer(on seconds: Double) {
+        timer.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: seconds, target: self, selector: #selector(updateCurrentCoinPrice), userInfo: nil, repeats: true)
+    }
+    
+    func stopTimer() {
+        timer.invalidate()
     }
 }
 
@@ -69,19 +80,17 @@ extension ExchangeRateViewController: UIPickerViewDataSource, UIPickerViewDelega
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        timer.invalidate()
         cryptoCyrrency = coinManager.cryptoCurrencies[row]
         updateCurrentCoinPrice()
-        
-        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(updateCurrentCoinPrice), userInfo: nil, repeats: true)
+        setTimer(on: 60.0)
     }
 }
 
 //MARK: - CoinManagerDelegate
 
 extension ExchangeRateViewController: CoinManagerDelegate {
-    func didFailWithError(_ error: Error) {
-        print(error)
+    func didFailWithError(_ error: NWError) {
+        print(error.rawValue)
     }
     
     private func stringFrom(price: Double) -> String {

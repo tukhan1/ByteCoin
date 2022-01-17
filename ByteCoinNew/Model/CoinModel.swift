@@ -9,6 +9,3 @@ struct CoinModel {
     let currency: String
     let price: Double
 }
-
-
-

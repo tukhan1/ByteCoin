@@ -69,10 +69,6 @@
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcr-qb-dr7">
                                 <rect key="frame" x="0.0" y="646" width="414" height="216"/>
                             </pickerView>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="hwp-Eg-L1m">
-                                <rect key="frame" x="113" y="88" width="188" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Cjp-tG-gmk">
                                 <rect key="frame" x="113" y="425" width="188" height="100"/>
                                 <subviews>

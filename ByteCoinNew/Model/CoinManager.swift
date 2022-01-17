@@ -10,7 +10,13 @@ import UIKit
 
 protocol CoinManagerDelegate: AnyObject {
     func didUpdatePrice(from: CoinModel)
-    func didFailWithError(_ error: Error)
+    func didFailWithError(_ error: NWError)
+}
+
+enum NWError: String, Error {
+    case invalidURL = "Something wrong with URL"
+    case unableToComplite = "Received ERROR"
+    case invalidData = "Something wrong with Data"
 }
 
 private struct CoinData: Decodable {
@@ -24,9 +30,6 @@ private struct CoinData: Decodable {
 }
 
 class CoinManager {
-    
-    weak var delegate: CoinManagerDelegate?
-    
     let currenciesArray: [Currency] = [
         Currency(image: UIImage(systemName: "rublesign.square"), designation: "RUB", title: "Российский рубль"),
         Currency(image: UIImage(systemName: "dollarsign.square"), designation: "USD", title: "Американский доллар"),
@@ -40,17 +43,18 @@ class CoinManager {
     private static let baseURL = "https://rest.coinapi.io/v1/exchangerate/"
     private static let apiKey = "759E9A9B-E140-465D-B47B-90DF2EAA17FC" /*"D209ABE8-CFA8-44F7-9E19-42CC3E665B24" "7EF6C5DA-C57D-44C1-BE2B-777B3B9C7332"*/
     
-    func getCoinPrice(for currency: String,to crypto: String? , completed: @escaping (Result<CoinModel, Error>) -> Void) {
-        let urlCoin = "\(CoinManager.baseURL + (crypto ?? "BTC"))/\(currency)?apikey=\(CoinManager.apiKey)"
+    func getCoinPrice(for currency: String, to crypto: String = "BTC" , completed: @escaping (Result<CoinModel, NWError>) -> Void) {
+        let urlCoin = "\(CoinManager.baseURL + crypto)/\(currency)?apikey=\(CoinManager.apiKey)"
         
         if let url = URL(string: urlCoin) {
-            print(url)
             let urlSession = URLSession(configuration: .default)
             let task = urlSession.dataTask(with: url) { data, response, error in
-                if error != nil {
-                    print(error!)
+                if let _ = error {
+                    completed(.failure(.unableToComplite))
+                    return
                 }
                 guard let safeData = data else {
+                    completed(.failure(.invalidData))
                     return
                 }
                 do {
@@ -61,11 +65,12 @@ class CoinManager {
                     completed(.success(CoinModel(currency: currency, price: price)))
                 }
                 catch {
-                    completed(.failure(error))
+                    completed(.failure(.invalidData))
                 }
             }
             task.resume()
         } else {
+            completed(.failure(.invalidURL))
             return
         }
     }

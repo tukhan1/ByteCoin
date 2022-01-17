@@ -53,14 +53,13 @@ class CurrencyViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "toExchangeRateVC" else {
-            return
-        }
-        guard let destinationVC = segue.destination as? ExchangeRateViewController else {
-            return
-        }
-        if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.currency = coinManager.currenciesArray[indexPath.row].designation
+        if segue.identifier == "toExchangeRateVC" {
+            guard let destinationVC = segue.destination as? ExchangeRateViewController else {
+                return
+            }
+            if let indexPath = tableView.indexPathForSelectedRow {
+                destinationVC.currency = coinManager.currenciesArray[indexPath.row].designation
+            }
         }
     }
 }
