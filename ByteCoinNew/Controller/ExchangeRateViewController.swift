@@ -11,7 +11,7 @@ class ExchangeRateViewController: UIViewController {
     
     private let coinManager = CoinManager()
     var currency: String = ""
-    private var timer = Timer()
+    private let timer = MyTimer()
     private var cryptoCyrrency = "BTC"
     
     @IBOutlet private var bitcoinLabel: UILabel!
@@ -21,15 +21,10 @@ class ExchangeRateViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.valueLabel.text = currency
-        
         updateCurrentCoinPrice()
-        
-        setTimer(on: 60.0)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        stopTimer()
+        timer.updateCoinPriceEvery(seconds: 60) { [weak self] in
+            self?.updateCurrentCoinPrice()
+        }
     }
     
     override func viewDidLoad() {
@@ -37,7 +32,7 @@ class ExchangeRateViewController: UIViewController {
         cryptoPicker.delegate = self
     }
     
-    @objc func updateCurrentCoinPrice() {
+    func updateCurrentCoinPrice() {
         coinManager.getCoinPrice(for: currency, to: cryptoCyrrency) { [weak self] result in
             guard let self = self else {
                 return
@@ -49,17 +44,6 @@ class ExchangeRateViewController: UIViewController {
                 self.didFailWithError(error)
             }
         }
-    }
-    
-//MARK: - Timer actions
-    
-    func setTimer(on seconds: Double) {
-        timer.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: seconds, target: self, selector: #selector(updateCurrentCoinPrice), userInfo: nil, repeats: true)
-    }
-    
-    func stopTimer() {
-        timer.invalidate()
     }
 }
 
@@ -82,7 +66,9 @@ extension ExchangeRateViewController: UIPickerViewDataSource, UIPickerViewDelega
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         cryptoCyrrency = coinManager.cryptoCurrencies[row]
         updateCurrentCoinPrice()
-        setTimer(on: 60.0)
+        timer.updateCoinPriceEvery(seconds: 60) { [weak self] in
+            self?.updateCurrentCoinPrice()
+        }
     }
 }
 
