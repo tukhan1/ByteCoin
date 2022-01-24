@@ -35,13 +35,14 @@ class CoinManager {
         Currency(image: UIImage(systemName: "dollarsign.square"), designation: "USD", title: "Американский доллар"),
         Currency(image: UIImage(systemName: "eurosign.square"), designation: "EUR", title: "Евро"),
         Currency(image: UIImage(systemName: "sterlingsign.square"), designation: "GBP", title: "Британский фунт стерлинга"),
-        Currency(image: UIImage(systemName: "yensign.square"), designation: "JPY", title: "Японская иена")
+        Currency(image: UIImage(systemName: "yensign.square"), designation: "JPY", title: "Японская иена"),
+        Currency(image: UIImage(systemName: "francsign.square"), designation: "CHF", title: "Швейцарский франк")
     ]
     
     let cryptoCurrencies: [String] = ["BTC", "ETH", "LTC", "DOGE", "BNB", "BCH"]
     
     private static let baseURL = "https://rest.coinapi.io/v1/exchangerate/"
-    private static let apiKey = "759E9A9B-E140-465D-B47B-90DF2EAA17FC" /*"D209ABE8-CFA8-44F7-9E19-42CC3E665B24" "7EF6C5DA-C57D-44C1-BE2B-777B3B9C7332"*/
+    private static let apiKey = /*"759E9A9B-E140-465D-B47B-90DF2EAA17FC"*/ "D209ABE8-CFA8-44F7-9E19-42CC3E665B24" /*"7EF6C5DA-C57D-44C1-BE2B-777B3B9C7332"*/
     
     func getCoinPrice(for currency: String, to crypto: String = "BTC" , completed: @escaping (Result<CoinModel, NWError>) -> Void) {
         let urlCoin = "\(CoinManager.baseURL + crypto)/\(currency)?apikey=\(CoinManager.apiKey)"

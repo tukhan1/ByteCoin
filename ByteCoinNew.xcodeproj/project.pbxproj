@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7749817227972A5600CA7069 /* MyTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7749817127972A5600CA7069 /* MyTimer.swift */; };
+		77498174279E97AD00CA7069 /* CurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77498173279E97AD00CA7069 /* CurrencyVC.swift */; };
+		77498176279E97BB00CA7069 /* CoinRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77498175279E97BB00CA7069 /* CoinRateVC.swift */; };
 		77E45B252791E8CE008906E0 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E45B242791E8CE008906E0 /* Currency.swift */; };
 		77E45B272791E94C008906E0 /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E45B262791E94C008906E0 /* CurrencyViewController.swift */; };
 		DC67031B27074190003E7F3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67031A27074190003E7F3D /* AppDelegate.swift */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		7749817127972A5600CA7069 /* MyTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimer.swift; sourceTree = "<group>"; };
+		77498173279E97AD00CA7069 /* CurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyVC.swift; sourceTree = "<group>"; };
+		77498175279E97BB00CA7069 /* CoinRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRateVC.swift; sourceTree = "<group>"; };
 		77E45B242791E8CE008906E0 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		77E45B262791E94C008906E0 /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
 		DC67031727074190003E7F3D /* ByteCoinNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ByteCoinNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +95,8 @@
 			children = (
 				DC67031E27074190003E7F3D /* ExchangeRateViewController.swift */,
 				77E45B262791E94C008906E0 /* CurrencyViewController.swift */,
+				77498173279E97AD00CA7069 /* CurrencyVC.swift */,
+				77498175279E97BB00CA7069 /* CoinRateVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -176,8 +182,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77498174279E97AD00CA7069 /* CurrencyVC.swift in Sources */,
 				77E45B252791E8CE008906E0 /* Currency.swift in Sources */,
 				DC67033227076C36003E7F3D /* CoinManager.swift in Sources */,
+				77498176279E97BB00CA7069 /* CoinRateVC.swift in Sources */,
 				DC67031F27074190003E7F3D /* ExchangeRateViewController.swift in Sources */,
 				77E45B272791E94C008906E0 /* CurrencyViewController.swift in Sources */,
 				DC67031B27074190003E7F3D /* AppDelegate.swift in Sources */,
