@@ -8,16 +8,24 @@
 import Foundation
 
 class MyTimer {
-    private var timer = Timer()
+    private var closure: () -> Void
+    private var seconds: Double
+    private var workItem: DispatchWorkItem?
     
-    func updateCoinPriceEvery(seconds: Double, with closure: @escaping () -> Void) {
-        timer.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: true) { _ in
-            closure()
-        }
+    init (seconds: Double, closure: @escaping () -> Void) {
+        self.seconds = seconds
+        self.closure = closure
     }
     
     deinit {
-        timer.invalidate()
+        self.workItem?.cancel()
+    }
+    
+    func performAction() {
+        workItem = DispatchWorkItem { [weak self] in
+            self?.closure()
+            self?.performAction()
+        }
+        DispatchQueue.global().asyncAfter(deadline: .now() + seconds, execute: workItem!)
     }
 }

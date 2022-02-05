@@ -8,7 +8,7 @@
 import UIKit
 
 struct Currency {
-    var image: UIImage? = UIImage(systemName: "exclamationmark.square")
-    let designation: String
-    let title: String
+    var designation: String
+    var name: String
+    var imageUrl: String
 }
