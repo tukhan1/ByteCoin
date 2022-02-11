@@ -5,10 +5,10 @@
 //  Created by Egor Tushev on 13.01.2022.
 //
 
-import UIKit
+import Foundation
 
 struct Currency {
     var designation: String
     var name: String
-    var imageUrl: String
+    var imageUrl: URL?
 }

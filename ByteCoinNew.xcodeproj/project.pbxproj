@@ -10,10 +10,16 @@
 		7749817227972A5600CA7069 /* MyTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7749817127972A5600CA7069 /* MyTimer.swift */; };
 		77498174279E97AD00CA7069 /* CurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77498173279E97AD00CA7069 /* CurrencyVC.swift */; };
 		77498176279E97BB00CA7069 /* CoinRateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77498175279E97BB00CA7069 /* CoinRateVC.swift */; };
-		774C253A27AD85860058DDA5 /* TimeseriesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774C253927AD85860058DDA5 /* TimeseriesData.swift */; };
+		774C253A27AD85860058DDA5 /* HistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774C253927AD85860058DDA5 /* HistoryData.swift */; };
 		77530EE527A18F5D00EB52A4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77530EE427A18F5D00EB52A4 /* SnapKit */; };
 		77530EEB27A2FDC600EB52A4 /* RateHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77530EEA27A2FDC600EB52A4 /* RateHistoryVC.swift */; };
+		7786DC0F27B40D54003BE0DB /* UITableView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786DC0E27B40D54003BE0DB /* UITableView+extension.swift */; };
 		77E45B252791E8CE008906E0 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E45B242791E8CE008906E0 /* Currency.swift */; };
+		77F9426427B41F1F00ED14E2 /* CurrenciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F9426327B41F1F00ED14E2 /* CurrenciesView.swift */; };
+		77F9426627B41F3100ED14E2 /* CoinRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F9426527B41F3100ED14E2 /* CoinRateView.swift */; };
+		77F9426827B41F4300ED14E2 /* RateHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F9426727B41F4300ED14E2 /* RateHistoryView.swift */; };
+		77F9426B27B6718D00ED14E2 /* MockCoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F9426A27B6718D00ED14E2 /* MockCoinManager.swift */; };
+		77F9426F27B6AB3800ED14E2 /* CoinProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F9426E27B6AB3800ED14E2 /* CoinProtocol.swift */; };
 		DC67031B27074190003E7F3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67031A27074190003E7F3D /* AppDelegate.swift */; };
 		DC67031D27074190003E7F3D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC67031C27074190003E7F3D /* SceneDelegate.swift */; };
 		DC67032427074193003E7F3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC67032327074193003E7F3D /* Assets.xcassets */; };
@@ -26,9 +32,15 @@
 		7749817127972A5600CA7069 /* MyTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTimer.swift; sourceTree = "<group>"; };
 		77498173279E97AD00CA7069 /* CurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyVC.swift; sourceTree = "<group>"; };
 		77498175279E97BB00CA7069 /* CoinRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRateVC.swift; sourceTree = "<group>"; };
-		774C253927AD85860058DDA5 /* TimeseriesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeseriesData.swift; sourceTree = "<group>"; };
+		774C253927AD85860058DDA5 /* HistoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryData.swift; sourceTree = "<group>"; };
 		77530EEA27A2FDC600EB52A4 /* RateHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateHistoryVC.swift; sourceTree = "<group>"; };
+		7786DC0E27B40D54003BE0DB /* UITableView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+extension.swift"; sourceTree = "<group>"; };
 		77E45B242791E8CE008906E0 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		77F9426327B41F1F00ED14E2 /* CurrenciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesView.swift; sourceTree = "<group>"; };
+		77F9426527B41F3100ED14E2 /* CoinRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRateView.swift; sourceTree = "<group>"; };
+		77F9426727B41F4300ED14E2 /* RateHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateHistoryView.swift; sourceTree = "<group>"; };
+		77F9426A27B6718D00ED14E2 /* MockCoinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoinManager.swift; sourceTree = "<group>"; };
+		77F9426E27B6AB3800ED14E2 /* CoinProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinProtocol.swift; sourceTree = "<group>"; };
 		DC67031727074190003E7F3D /* ByteCoinNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ByteCoinNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC67031A27074190003E7F3D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC67031C27074190003E7F3D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +63,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7786DC0D27B40D34003BE0DB /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7749817127972A5600CA7069 /* MyTimer.swift */,
+				7786DC0E27B40D54003BE0DB /* UITableView+extension.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		77F9426227B41E1E00ED14E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				77F9426327B41F1F00ED14E2 /* CurrenciesView.swift */,
+				77F9426527B41F3100ED14E2 /* CoinRateView.swift */,
+				77F9426727B41F4300ED14E2 /* RateHistoryView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		77F9426C27B6AAE700ED14E2 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				DC67033127076C36003E7F3D /* CoinManager.swift */,
+				77F9426A27B6718D00ED14E2 /* MockCoinManager.swift */,
+				77F9426E27B6AB3800ED14E2 /* CoinProtocol.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		77F9426D27B6AAF600ED14E2 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				77E45B242791E8CE008906E0 /* Currency.swift */,
+				DC85021B270B3BCC005B0045 /* CoinModel.swift */,
+				774C253927AD85860058DDA5 /* HistoryData.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
 		DC67030E27074190003E7F3D = {
 			isa = PBXGroup;
 			children = (
@@ -71,7 +122,9 @@
 			isa = PBXGroup;
 			children = (
 				DC670330270741BA003E7F3D /* Model */,
+				77F9426227B41E1E00ED14E2 /* View */,
 				DC67032F270741B0003E7F3D /* Controller */,
+				7786DC0D27B40D34003BE0DB /* Common */,
 				DC67031A27074190003E7F3D /* AppDelegate.swift */,
 				DC67031C27074190003E7F3D /* SceneDelegate.swift */,
 				DC67032327074193003E7F3D /* Assets.xcassets */,
@@ -94,11 +147,8 @@
 		DC670330270741BA003E7F3D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DC67033127076C36003E7F3D /* CoinManager.swift */,
-				77E45B242791E8CE008906E0 /* Currency.swift */,
-				DC85021B270B3BCC005B0045 /* CoinModel.swift */,
-				774C253927AD85860058DDA5 /* TimeseriesData.swift */,
-				7749817127972A5600CA7069 /* MyTimer.swift */,
+				77F9426C27B6AAE700ED14E2 /* Managers */,
+				77F9426D27B6AAF600ED14E2 /* DTO */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -180,14 +230,20 @@
 			files = (
 				77498174279E97AD00CA7069 /* CurrencyVC.swift in Sources */,
 				77530EEB27A2FDC600EB52A4 /* RateHistoryVC.swift in Sources */,
+				7786DC0F27B40D54003BE0DB /* UITableView+extension.swift in Sources */,
 				77E45B252791E8CE008906E0 /* Currency.swift in Sources */,
 				DC67033227076C36003E7F3D /* CoinManager.swift in Sources */,
 				77498176279E97BB00CA7069 /* CoinRateVC.swift in Sources */,
-				774C253A27AD85860058DDA5 /* TimeseriesData.swift in Sources */,
+				77F9426627B41F3100ED14E2 /* CoinRateView.swift in Sources */,
+				774C253A27AD85860058DDA5 /* HistoryData.swift in Sources */,
+				77F9426F27B6AB3800ED14E2 /* CoinProtocol.swift in Sources */,
 				DC67031B27074190003E7F3D /* AppDelegate.swift in Sources */,
 				DC85021C270B3BCC005B0045 /* CoinModel.swift in Sources */,
+				77F9426427B41F1F00ED14E2 /* CurrenciesView.swift in Sources */,
+				77F9426827B41F4300ED14E2 /* RateHistoryView.swift in Sources */,
 				DC67031D27074190003E7F3D /* SceneDelegate.swift in Sources */,
 				7749817227972A5600CA7069 /* MyTimer.swift in Sources */,
+				77F9426B27B6718D00ED14E2 /* MockCoinManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +390,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Egor-Tushev.ByteCoinNew";
+				PRODUCT_BUNDLE_IDENTIFIER = "Egor-Tushev.ByteCoinNew1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -354,7 +410,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Egor-Tushev.ByteCoinNew";
+				PRODUCT_BUNDLE_IDENTIFIER = "Egor-Tushev.ByteCoinNew1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
