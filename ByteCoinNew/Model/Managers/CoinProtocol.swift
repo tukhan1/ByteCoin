@@ -13,7 +13,7 @@ enum NWError: String, Error {
     case invalidData = "Something wrong with Data"
 }
 
-protocol CoinProtocol {
+protocol CoinProtocol: AnyObject {
     var cryptoCurrencies: [String] { get }
     func getCurrencies(completion: @escaping (Result<[Currency], NWError>) -> Void)
     func getCoinPrice(for currency: String, to crypto: String, completion: @escaping (Result<CoinModel, NWError>) -> Void)

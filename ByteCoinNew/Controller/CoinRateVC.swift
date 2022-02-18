@@ -5,24 +5,25 @@
 //  Created by Egor Tushev on 24.01.2022.
 //
 
-import Foundation
 import UIKit
 
 class CoinRateVC: UIViewController {
-    
-    private let coinManager: CoinProtocol
+    var date: String = ""
     var currency: String = "USD" {
         willSet(newCurrency) {
             self.coinRateView.currency = newCurrency
         }
     }
-    var date: String = ""
+
     private var cryptoCyrrency = "BTC"
     private var cryptoCurrencies: [String] = []
+    private let coinManager: CoinProtocol
+
+    private let coinRateView: CoinRateView = CoinRateView(frame: UIScreen.main.bounds)
+
     private lazy var timer = MyTimer(seconds: 60) { [weak self] in
         self?.updateCurrentCoinPrice()
     }
-    private let coinRateView: CoinRateView = CoinRateView(frame: UIScreen.main.bounds)
     
     init(coinManager: CoinProtocol) {
         self.coinManager = coinManager
@@ -33,15 +34,10 @@ class CoinRateVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        view.addSubview(coinRateView)
-        configure()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        view.addSubview(coinRateView)
+        configure()
         coinRateView.coinLabel.text = currency
         updateCurrentCoinPrice()
         timer.performAction()
@@ -52,44 +48,11 @@ class CoinRateVC: UIViewController {
     
         self.cryptoCurrencies = coinManager.cryptoCurrencies
         
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(showHistory))
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(pushToNextVC))
         coinRateView.coinView.addGestureRecognizer(gesture)
     }
     
-    func updateCurrentCoinPrice() {
-        coinManager.getCoinPrice(for: currency, to: cryptoCyrrency) { [weak self] result in
-            guard let self = self else {
-                return
-            }
-            switch result {
-            case .success(let data):
-                self.didUpdatePrice(from: data)
-            case .failure(let error):
-                self.didFailWithError(error)
-            }
-        }
-    }
-    
-    private func didFailWithError(_ error: NWError) {
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Error", message: error.rawValue, preferredStyle: .alert)
-            let action = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    private func didUpdatePrice(from dataModel: CoinModel) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.coinRateView.coinLabel.text = String(format: "%.2f", dataModel.price)
-            self.date = dataModel.date
-        }
-    }
-    
-    @objc func showHistory (_ sender: UITapGestureRecognizer) {
+    @objc func pushToNextVC (_ sender: UITapGestureRecognizer) {
         let rateHistoryVC = RateHistoryVC(coinManager: self.coinManager)
         rateHistoryVC.currency = self.currency
         rateHistoryVC.cryptoCurrency = self.cryptoCyrrency
@@ -97,15 +60,48 @@ class CoinRateVC: UIViewController {
         let nextVC = UINavigationController(rootViewController: rateHistoryVC)
         navigationController?.present(nextVC, animated: true, completion: nil)
     }
+    
+    func updateCurrentCoinPrice() {
+        coinManager.getCoinPrice(for: currency, to: cryptoCyrrency) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else {
+                    return
+                }
+                switch result {
+                case .success(let data):
+                    self.didUpdatePrice(from: data)
+                case .failure(let error):
+                    self.didFailWithError(error)
+                }
+            }
+        }
+    }
+    
+    private func didUpdatePrice(from dataModel: CoinModel) {
+            self.coinRateView.coinLabel.text = String(format: "%.2f", dataModel.price)
+            self.date = dataModel.date
+    }
+    
+    private func didFailWithError(_ error: NWError) {
+            let alert = UIAlertController(title: "Error", message: error.rawValue, preferredStyle: .alert)
+            let action = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+            alert.addAction(action)
+        
+            self.present(alert, animated: true, completion: nil)
+    }
 }
 
 private extension CoinRateVC {
     func configure() {
-        coinRateView.configureView()
-        coinRateView.makeConstraints()
+        view.addSubview(coinRateView)
+        coinRateView.commonInit()
+        
+        coinRateView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
         
         coinRateView.coinPickerView.delegate = self
-        
     }
 }
 

@@ -52,17 +52,13 @@ private struct TimeseriesData: Decodable {
 }
 
 class CoinManager: CoinProtocol {
+    let cryptoCurrencies: [String] = ["BTC", "ETH", "LTC", "BNB", "BCH", "DOGE"]
     
-    let cryptoCurrencies: [String] = ["BTC", "ETH", "LTC", "DOGE", "BNB", "BCH"]
+    private let networkManager: NetworkManager
     
-    private static let baseURL = "https://rest.coinapi.io"
-    private static var apiKey: String = ""
-    
-    init(apiKey: String) {
-        Self.apiKey = apiKey
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
     }
-    
-    //MARK: - Fetching data
 
     func getCurrencies(completion: @escaping (Result<[Currency], NWError>) -> Void) {
         let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
@@ -102,13 +98,13 @@ class CoinManager: CoinProtocol {
     }
     
     private func fatchCurrencies(completion: @escaping (Result<[Value], NWError>) -> Void) {
-        let url = "/v1/assets"
-        request(withUrl: url, completion: completion)
+        let path = "/v1/assets"
+        networkManager.request(withUrl: path, completion: completion)
     }
     
-    private func getImagesForCurrencies(size: Int = 25, completion: @escaping (Result<[Image], NWError>) -> Void) {
-        let url = "/v1/assets/icons/\(size)"
-        request(withUrl: url, completion: completion)
+    private func getImagesForCurrencies(size: Int = 10, completion: @escaping (Result<[Image], NWError>) -> Void) {
+        let path = "/v1/assets/icons/\(size)"
+        networkManager.request(withUrl: path, completion: completion)
     }
     
     private func margeImagesAndCurrency(images: [Image], currencies: [Value]) -> [Currency] {
@@ -125,9 +121,11 @@ class CoinManager: CoinProtocol {
         return values
     }
     
-    func getCoinPrice(for currency: String, to crypto: String = "BTC", completion: @escaping (Result<CoinModel, NWError>) -> Void) {
-        let urlCoin = "/v1/exchangerate/\(crypto)/\(currency)"
-        request(withUrl: urlCoin) { (result: Result<CoinData, NWError>) in
+    func getCoinPrice(for currency: String,
+                      to crypto: String = "BTC",
+                      completion: @escaping (Result<CoinModel, NWError>) -> Void) {
+        let path = "/v1/exchangerate/\(crypto)/\(currency)"
+        networkManager.request(withUrl: path) { (result: Result<CoinData, NWError>) in
             switch result {
             case .success(let newCoinData):
                 completion(.success(CoinModel(date: newCoinData.time,
@@ -144,78 +142,21 @@ class CoinManager: CoinProtocol {
                                 timeEnd: String,
                                 completion: @escaping (Result<[HistoryData], NWError>) -> Void) {
         
-        let url = "/v1/exchangerate/\(coin)/\(currency)/history?period_id=1HRS&time_start=\(getDayBefore(timeEnd))&time_end=\(timeEnd)"
-        request(withUrl: url) { [weak self] (result: Result<[TimeseriesData], NWError>) in
-            guard let self = self else { return }
-            var history: [HistoryData] = []
+        let nDaysBefore = timeEnd.getNDaysBefore(N: 4)
+        
+        let path = "/v1/exchangerate/\(coin)/\(currency)/history?period_id=1HRS&time_start=\(nDaysBefore)&time_end=\(timeEnd)"
+        networkManager.request(withUrl: path) { (result: Result<[TimeseriesData], NWError>) in
             switch result {
             case .success(let data):
-                data.forEach { ex in
-                    let timeOpen = self.transformStringToDate(ex.timeOpen)
-                    history.append(HistoryData(timeOpen: timeOpen, rateOpen: ex.rateOpen))
+                var history: [HistoryData] = []
+                data.forEach { item in
+                    let timeOpen = item.timeOpen.transformStringToDate()
+                    history.append(HistoryData(timeOpen: timeOpen, rateOpen: item.rateOpen))
                 }
                 completion(.success(history))
-            case .failure(let e):
-                completion(.failure(e))
+            case .failure(let error):
+                completion(.failure(error))
             }
-        }
-    }
-    
-    private func request<T: Decodable>(withUrl url: String, completion: @escaping (Result<T, NWError>) -> Void) {
-        if let requestUrl = URL(string: "\(CoinManager.baseURL)".appending(url)) {
-            var request = URLRequest(url: requestUrl)
-            request.httpMethod = "GET"
-            request.addValue(CoinManager.apiKey, forHTTPHeaderField: "X-CoinAPI-Key")
-            
-            // Perform request
-            let urlSession = URLSession(configuration: .default)
-            let task = urlSession.dataTask(with: request as URLRequest) { data, response, error in
-                if let _ = error {
-                    completion(.failure(.unableToComplete))
-                    return
-                }
-                guard let safeData = data else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                do {
-                    let decoder = JSONDecoder()
-                    let decodedData = try decoder.decode(T.self, from: safeData)
-                    let data = decodedData
-                    completion(.success(data))
-                } catch {
-                    completion(.failure(.invalidData))
-                }
-            }
-            task.resume()
-        } else {
-            completion(.failure(.invalidURL))
-            return
-        }
-    }
-    
-    //MARK: - transform Date
-    
-    private func transformStringToDate(_ str: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        if let date = dateFormatter.date(from: str) {
-            return date
-        }
-        return Date()
-    }
-    
-    private func getDayBefore(_ value: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        if let date = dateFormatter.date(from: value) {
-            let dayBefore = date.addingTimeInterval(-86400.0)
-            return dateFormatter.string(from: dayBefore)
-        } else {
-            return "There was an error decoding the string"
         }
     }
 }

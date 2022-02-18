@@ -6,19 +6,24 @@
 //
 
 import UIKit
+import SnapKit
 
 class CoinRateView: UIView {
+    var currency = ""
+    let coinPickerView: UIPickerView = UIPickerView(frame: .zero)
+    let coinLabel: UILabel = UILabel(frame: .zero)
+    let coinView: UIView = UIView(frame: .zero)
     
     private let viewForPicker: UIView = UIView(frame: .zero)
     private let coinImageView: UIImageView = UIImageView(frame: .zero)
-    let coinPickerView: UIPickerView = UIPickerView(frame: .zero)
-    let coinLabel: UILabel = UILabel(frame: .zero)
-    let currencyDesignation: UILabel = UILabel(frame: .zero)
-    let coinView: UIView = UIView(frame: .zero)
+    private let currencyDesignation: UILabel = UILabel(frame: .zero)
     
-    var currency = ""
+    func commonInit() {
+        configureView()
+        makeConstraints()
+    }
     
-    func configureView() {
+    private func configureView() {
         self.addSubview(coinView)
         coinView.addSubview(coinImageView)
         coinView.addSubview(coinLabel)
@@ -38,7 +43,7 @@ class CoinRateView: UIView {
         coinImageView.tintColor = UIColor(named: "Icon_Color")
     }
     
-    func makeConstraints() {
+    private func makeConstraints() {
         coinView.snp.makeConstraints { maker in
             maker.centerX.equalTo(self.snp.centerX)
             maker.centerY.equalTo(self.snp.centerY)

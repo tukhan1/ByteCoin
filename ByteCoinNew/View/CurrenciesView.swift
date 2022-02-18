@@ -9,6 +9,9 @@ import UIKit
 import SnapKit
 
 class CurrenciesView: UIView {
+    var currencies: [Currency] = []
+    var allCurrencies: [Currency] = []
+    
     let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     let textField: UITextField = UITextField(frame: .zero)
     
@@ -23,6 +26,28 @@ class CurrenciesView: UIView {
         configureView()
         makeConstraints()
         addObservers()
+        tableView.dataSource = self
+        tableView.register(CurrencyViewCell.self)
+    }
+    
+    func updateUI(with currencies: [Currency]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.currencies = currencies
+            self.allCurrencies = currencies
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    func updateUI() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.textField.text = ""
+            self.currencies = self.allCurrencies
+            
+            self.tableView.reloadData()
+        }
     }
     
     private func configureView() {
@@ -100,8 +125,97 @@ class CurrenciesView: UIView {
     
     private func changeBottomConstraintUseKeyboard(rect: CGRect) {
         UIView.animate(withDuration: 0.25, animations: {
-                self.bottomConstraint?.update(offset: -rect.height)
-                self.layoutIfNeeded()
+            self.bottomConstraint?.update(offset: -rect.height)
+            self.layoutIfNeeded()
         })
+    }
+}
+
+//MARK: - TableViewDataSourse
+
+extension CurrenciesView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        currencies.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(type: CurrencyViewCell.self, for: indexPath)
+        
+        let currencyForRow = currencies[indexPath.row]
+        cell.configuration(imageUrl: currencyForRow.imageUrl, designation: currencyForRow.designation, title: currencyForRow.name)
+        return cell
+    }
+}
+
+//MARK: - CurrencyViewCell
+
+private class CurrencyViewCell: UITableViewCell, TableCell {
+    static let identifier = "\(CurrencyViewCell.self)"
+    private var imageUrl: URL?
+    private let currencyImageView: UIImageView = UIImageView(image: .add)
+    private let currencyNameLabel: UILabel = UILabel(frame: .zero)
+    private let currencyDesignation: UILabel = UILabel(frame: .zero)
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureView()
+        makeConstraints()
+    }
+    
+    private func configureView() {
+        contentView.addSubview(currencyImageView)
+        contentView.addSubview(currencyNameLabel)
+        contentView.addSubview(currencyDesignation)
+        
+        currencyImageView.tintColor = UIColor(named: "Title Color")
+        currencyDesignation.tintColor = UIColor(named: "Title Color")
+        currencyDesignation.textAlignment = .center
+        currencyNameLabel.tintColor = UIColor(named: "Title Color")
+        currencyNameLabel.textAlignment = .left
+    }
+    
+    private func makeConstraints() {
+        currencyImageView.snp.makeConstraints { maker in
+            maker.left.equalTo(contentView.snp.left).offset(20.0)
+            maker.centerY.equalTo(contentView.snp.centerY)
+            maker.width.equalTo(contentView.snp.height).multipliedBy(0.9)
+            maker.height.equalTo(contentView.snp.height).multipliedBy(0.9)
+        }
+        currencyDesignation.snp.makeConstraints { maker in
+            maker.left.equalTo(currencyImageView.snp.right).offset(5.0)
+            maker.centerY.equalTo(contentView.snp.centerY)
+            maker.width.equalTo(50.0)
+        }
+        currencyNameLabel.snp.makeConstraints { maker in
+            maker.left.equalTo(currencyDesignation.snp.right).offset(5.0)
+            maker.right.equalTo(contentView.snp.right).inset(20.0)
+            maker.centerY.equalTo(contentView.snp.centerY)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configuration(imageUrl: URL? ,designation: String, title: String) {
+        DispatchQueue.global().async {
+            do {
+                if let url = imageUrl {
+                    let data = try Data(contentsOf: url)
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        if url == self.imageUrl {
+                            self.currencyImageView.image = UIImage(data: data)
+                        }
+                    }
+                }
+            }
+            catch {
+                print(error)
+            }
+        }
+        self.imageUrl = imageUrl
+        self.currencyNameLabel.text = title
+        self.currencyDesignation.text = designation
     }
 }
