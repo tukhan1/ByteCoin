@@ -13,6 +13,7 @@
 		774C253A27AD85860058DDA5 /* HistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774C253927AD85860058DDA5 /* HistoryData.swift */; };
 		77530EE527A18F5D00EB52A4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77530EE427A18F5D00EB52A4 /* SnapKit */; };
 		77530EEB27A2FDC600EB52A4 /* RateHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77530EEA27A2FDC600EB52A4 /* RateHistoryVC.swift */; };
+		775BA83227C3ABBB00883AD3 /* ImageStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775BA83127C3ABBB00883AD3 /* ImageStorageManager.swift */; };
 		7786DC0F27B40D54003BE0DB /* UITableView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7786DC0E27B40D54003BE0DB /* UITableView+extension.swift */; };
 		77D94F9427BC22E300BD24B2 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D94F9327BC22E300BD24B2 /* NetworkManager.swift */; };
 		77D94F9627BEA63800BD24B2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D94F9527BEA63800BD24B2 /* Extensions.swift */; };
@@ -36,6 +37,7 @@
 		77498175279E97BB00CA7069 /* CoinRateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRateVC.swift; sourceTree = "<group>"; };
 		774C253927AD85860058DDA5 /* HistoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryData.swift; sourceTree = "<group>"; };
 		77530EEA27A2FDC600EB52A4 /* RateHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateHistoryVC.swift; sourceTree = "<group>"; };
+		775BA83127C3ABBB00883AD3 /* ImageStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorageManager.swift; sourceTree = "<group>"; };
 		7786DC0E27B40D54003BE0DB /* UITableView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+extension.swift"; sourceTree = "<group>"; };
 		77D94F9327BC22E300BD24B2 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		77D94F9527BEA63800BD24B2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -67,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		775BA83327C3B71D00883AD3 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				775BA83127C3ABBB00883AD3 /* ImageStorageManager.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		7786DC0D27B40D34003BE0DB /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				77F9426C27B6AAE700ED14E2 /* Managers */,
+				775BA83327C3B71D00883AD3 /* Storage */,
 				77F9426D27B6AAF600ED14E2 /* DTO */,
 			);
 			path = Model;
@@ -239,6 +250,7 @@
 				77530EEB27A2FDC600EB52A4 /* RateHistoryVC.swift in Sources */,
 				7786DC0F27B40D54003BE0DB /* UITableView+extension.swift in Sources */,
 				77E45B252791E8CE008906E0 /* Currency.swift in Sources */,
+				775BA83227C3ABBB00883AD3 /* ImageStorageManager.swift in Sources */,
 				DC67033227076C36003E7F3D /* CoinManager.swift in Sources */,
 				77498176279E97BB00CA7069 /* CoinRateVC.swift in Sources */,
 				77F9426627B41F3100ED14E2 /* CoinRateView.swift in Sources */,

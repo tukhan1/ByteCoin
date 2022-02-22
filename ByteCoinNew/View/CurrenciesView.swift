@@ -151,6 +151,8 @@ extension CurrenciesView: UITableViewDataSource {
 
 private class CurrencyViewCell: UITableViewCell, TableCell {
     static let identifier = "\(CurrencyViewCell.self)"
+    private static var cache: NSCache<NSURL, NSData> = NSCache()
+    
     private var imageUrl: URL?
     private let currencyImageView: UIImageView = UIImageView(image: .add)
     private let currencyNameLabel: UILabel = UILabel(frame: .zero)
@@ -200,13 +202,32 @@ private class CurrencyViewCell: UITableViewCell, TableCell {
     func configuration(imageUrl: URL? ,designation: String, title: String) {
         DispatchQueue.global().async {
             do {
-                if let url = imageUrl {
-                    let data = try Data(contentsOf: url)
+                guard let url = imageUrl else {
+                    return
+                }
+                
+                let cacheData = Self.cache.object(forKey: url as NSURL) as Data?
+                let data = try cacheData ?? Data(contentsOf: url)
+                Self.cache.setObject(data as NSData, forKey: url as NSURL)
+                
+                if let image = ImageStorageManager().getImage(by: url.absoluteString) {
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
                         if url == self.imageUrl {
-                            self.currencyImageView.image = UIImage(data: data)
+                            self.currencyImageView.image = image
+                            print("loaded from Cache")
                         }
+                    }
+                    return
+                }
+                
+                let image = UIImage(data: data)
+                ImageStorageManager().saveImage(image, by: url.absoluteString)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    if url == self.imageUrl {
+                        self.currencyImageView.image = image
+                        print("loaded from NW")
                     }
                 }
             }
