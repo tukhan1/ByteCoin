@@ -13,10 +13,10 @@ class RateHistoryVC: UIViewController {
     var date: String = ""
     
     private let rateHistoryView: RateHistoryView = RateHistoryView(frame: UIScreen.main.bounds)
-    private let coinManager: CoinProtocol
+    private let coinService: CoinProtocol
     
-    init(coinManager: CoinProtocol) {
-        self.coinManager = coinManager
+    init(coinService: CoinProtocol) {
+        self.coinService = coinService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,7 +36,7 @@ class RateHistoryVC: UIViewController {
     }
     
     private func updateHistoryPricePerHour() {
-        coinManager.getHistoryPricePerHour(for: cryptoCurrency,
+        coinService.getHistoryPricePerHour(for: cryptoCurrency,
                                               to: currency,
                                               timeEnd: date) { [weak self] result in
             DispatchQueue.main.async {
@@ -101,5 +101,13 @@ private extension RateHistoryVC {
 extension RateHistoryVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+}
+
+private extension Date {
+    func getDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        return dateFormatter.string(from: self)
     }
 }

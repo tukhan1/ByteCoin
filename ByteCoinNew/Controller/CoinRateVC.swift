@@ -17,7 +17,7 @@ class CoinRateVC: UIViewController {
 
     private var cryptoCyrrency = "BTC"
     private var cryptoCurrencies: [String] = []
-    private let coinManager: CoinProtocol
+    private let coinService: CoinProtocol
 
     private let coinRateView: CoinRateView = CoinRateView(frame: UIScreen.main.bounds)
 
@@ -25,8 +25,8 @@ class CoinRateVC: UIViewController {
         self?.updateCurrentCoinPrice()
     }
     
-    init(coinManager: CoinProtocol) {
-        self.coinManager = coinManager
+    init(coinService: CoinProtocol) {
+        self.coinService = coinService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,14 +46,14 @@ class CoinRateVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.cryptoCurrencies = coinManager.cryptoCurrencies
+        self.cryptoCurrencies = coinService.cryptoCurrencies
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(pushToNextVC))
         coinRateView.coinView.addGestureRecognizer(gesture)
     }
     
     @objc func pushToNextVC (_ sender: UITapGestureRecognizer) {
-        let rateHistoryVC = RateHistoryVC(coinManager: self.coinManager)
+        let rateHistoryVC = RateHistoryVC(coinService: self.coinService)
         rateHistoryVC.currency = self.currency
         rateHistoryVC.cryptoCurrency = self.cryptoCyrrency
         rateHistoryVC.date = self.date
@@ -62,7 +62,7 @@ class CoinRateVC: UIViewController {
     }
     
     func updateCurrentCoinPrice() {
-        coinManager.getCoinPrice(for: currency, to: cryptoCyrrency) { [weak self] result in
+        coinService.getCoinPrice(for: currency, to: cryptoCyrrency) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else {
                     return

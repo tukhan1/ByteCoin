@@ -151,7 +151,8 @@ extension CurrenciesView: UITableViewDataSource {
 
 private class CurrencyViewCell: UITableViewCell, TableCell {
     static let identifier = "\(CurrencyViewCell.self)"
-    private static var cache: NSCache<NSURL, NSData> = NSCache()
+    
+    private static let imageStorageManager = ImageStorageManager()
     
     private var imageUrl: URL?
     private let currencyImageView: UIImageView = UIImageView(image: .add)
@@ -200,43 +201,45 @@ private class CurrencyViewCell: UITableViewCell, TableCell {
     }
     
     func configuration(imageUrl: URL? ,designation: String, title: String) {
-        DispatchQueue.global().async {
-            do {
-                guard let url = imageUrl else {
-                    return
-                }
-                
-                let cacheData = Self.cache.object(forKey: url as NSURL) as Data?
-                let data = try cacheData ?? Data(contentsOf: url)
-                Self.cache.setObject(data as NSData, forKey: url as NSURL)
-                
-                if let image = ImageStorageManager().getImage(by: url.absoluteString) {
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        if url == self.imageUrl {
-                            self.currencyImageView.image = image
-                            print("loaded from Cache")
-                        }
-                    }
-                    return
-                }
-                
-                let image = UIImage(data: data)
-                ImageStorageManager().saveImage(image, by: url.absoluteString)
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    if url == self.imageUrl {
-                        self.currencyImageView.image = image
-                        print("loaded from NW")
-                    }
-                }
-            }
-            catch {
-                print(error)
-            }
-        }
+        loadImageWith(imageUrl)
+        
         self.imageUrl = imageUrl
         self.currencyNameLabel.text = title
         self.currencyDesignation.text = designation
+    }
+    
+    private func loadImageWith(_ imageUrl: URL?) {
+        guard let url = imageUrl else { return }
+        
+        if let image = ImageStorageManager.cache.object(forKey: url as NSURL) {
+            currencyImageView.image = image
+        } else {
+            DispatchQueue.global().async {
+                if let image = Self.imageStorageManager.getImage(by: url.absoluteString) {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {return}
+                        ImageStorageManager.cache.setObject(image, forKey: url as NSURL)
+                        self.currencyImageView.image = image
+                    }
+                } else {
+                    do {
+                        let data = try Data(contentsOf: url)
+                        if let image = UIImage(data: data) {
+                            if url == self.imageUrl {
+                                DispatchQueue.main.async { [weak self] in
+                                    guard let self = self else {return}
+                                    Self.imageStorageManager.saveImage(image, by: url.absoluteString)
+                                    ImageStorageManager.cache.setObject(image, forKey: url as NSURL)
+                                    self.currencyImageView.image = image
+                                }
+                            }
+                        }
+                    } catch {
+                        print("Error loading image from NW: \(error)")
+                        return
+                    }
+                }
+            }
+        }
     }
 }

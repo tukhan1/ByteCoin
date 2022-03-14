@@ -9,6 +9,9 @@ import UIKit
 import CryptoKit
 
 final class ImageStorageManager {
+    
+    static var cache: NSCache<NSURL, UIImage> = NSCache()
+    
     private lazy var cacheDirectory: URL = {
         guard let dir = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else {
             fatalError()

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SuccessMockCoinManager: CoinProtocol {
+class SuccessMockCoinService: CoinProtocol {
     
     let cryptoCurrencies = ["BTC", "ETH"]
     
@@ -29,7 +29,7 @@ class SuccessMockCoinManager: CoinProtocol {
     }
 }
 
-class FailureMockCoinManager: CoinProtocol {
+class FailureMockCoinService: CoinProtocol {
     
     let cryptoCurrencies = ["BTC"]
     

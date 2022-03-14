@@ -123,3 +123,17 @@ private class RateHisroryVCCell: UITableViewCell, TableCell {
         }
     }
 }
+
+private extension Date {
+    func getDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        return dateFormatter.string(from: self)
+    }
+
+    func getTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        return dateFormatter.string(from: self)
+    }
+}

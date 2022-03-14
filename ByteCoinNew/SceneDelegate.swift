@@ -16,13 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let networkManager = NetworkManager(baseUrl: URL(string: "https://rest.coinapi.io")!, apiKey: "92143236-BED0-4E67-9FA1-C8E0FB161020")
+        let networkManager = NetworkManager(baseUrl: URL(string: "https://rest.coinapi.io")!, apiKey: "759E9A9B-E140-465D-B47B-90DF2EAA17FC")
         /*"92143236-BED0-4E67-9FA1-C8E0FB161020" "759E9A9B-E140-465D-B47B-90DF2EAA17FC" "D209ABE8-CFA8-44F7-9E19-42CC3E665B24" "7EF6C5DA-C57D-44C1-BE2B-777B3B9C7332"*/
         
-        let manager: CoinProtocol = CoinManager(networkManager: networkManager)
+        let manager: CoinProtocol = CoinService(networkManager: networkManager)
          
            let window = UIWindow(windowScene: windowScene)
-           window.rootViewController = UINavigationController(rootViewController: CurrencyVC(coinManager: manager))
+           window.rootViewController = UINavigationController(rootViewController: CurrencyVC(coinService: manager))
         
            window.makeKeyAndVisible()
            self.window = window

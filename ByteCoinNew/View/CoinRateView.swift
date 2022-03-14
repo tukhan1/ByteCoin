@@ -34,6 +34,7 @@ class CoinRateView: UIView {
         self.backgroundColor = UIColor(named: "Background_Color")
         viewForPicker.backgroundColor = UIColor(named: "Background_Color")
         coinView.backgroundColor = UIColor(named: "Title_Color")
+        coinView.layer.cornerRadius = 10.0
         coinImageView.image = UIImage(systemName: "bitcoinsign.circle.fill")
         coinLabel.textAlignment = .center
         coinLabel.numberOfLines = 0

@@ -51,7 +51,7 @@ private struct TimeseriesData: Decodable {
     }
 }
 
-class CoinManager: CoinProtocol {
+class CoinService: CoinProtocol {
     let cryptoCurrencies: [String] = ["BTC", "ETH", "LTC", "BNB", "BCH", "DOGE"]
     
     private let networkManager: NetworkManager
@@ -157,6 +157,29 @@ class CoinManager: CoinProtocol {
             case .failure(let error):
                 completion(.failure(error))
             }
+        }
+    }
+}
+
+private extension String {
+    func getNDaysBefore(N number: Double) -> String {
+        let dateFormatter = DateFormatter.apiFormat
+        
+        if let date = dateFormatter.date(from: self) {
+            let nDaysBefore = date.addingTimeInterval(-86400.0 * number)
+            return dateFormatter.string(from: nDaysBefore)
+        } else {
+            return "There was an error decoding the string"
+        }
+    }
+
+    func transformStringToDate() -> Date {
+        let dateFormatter = DateFormatter.apiFormat
+        
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return Date()
         }
     }
 }

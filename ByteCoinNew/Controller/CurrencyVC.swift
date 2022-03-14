@@ -9,11 +9,11 @@ import UIKit
 import SnapKit
 
 class CurrencyVC: UIViewController {
-    private let coinManager: CoinProtocol
-    private var currenciesView: CurrenciesView = CurrenciesView(frame: UIScreen.main.bounds)
+    private let coinService: CoinProtocol
+    private let currenciesView = CurrenciesView(frame: UIScreen.main.bounds)
     
-    init(coinManager: CoinProtocol) {
-        self.coinManager = coinManager
+    init(coinService: CoinProtocol) {
+        self.coinService = coinService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,7 +33,7 @@ class CurrencyVC: UIViewController {
     }
     
     private func updateCurrencies() {
-        coinManager.getCurrencies { [weak self] result in
+        coinService.getCurrencies { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else {
                     return
@@ -69,7 +69,6 @@ private extension CurrencyVC {
         }
         
         currenciesView.tableView.delegate = self
-        currenciesView.tableView.tableFooterView = UIView(frame: .zero)
         currenciesView.textField.delegate = self
     }
 }
@@ -102,7 +101,7 @@ extension CurrencyVC: UITextFieldDelegate {
 extension CurrencyVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        pushToNext(viewController: CoinRateVC(coinManager: coinManager), indexPath)
+        pushToNext(viewController: CoinRateVC(coinService: coinService), indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
